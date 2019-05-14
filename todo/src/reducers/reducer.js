@@ -1,4 +1,4 @@
-import { ADD_ITEM, TOGGLE_ITEM } from '../actions'
+import { ADD_ITEM, TOGGLE_ITEM, DELETE_ITEM } from '../actions'
 
 const initialState = {
     items: [
@@ -30,7 +30,13 @@ function reducer(state = initialState, action) {
                     return item;
                 })
             };
-            
+
+        case DELETE_ITEM:
+            return {
+                ...state, 
+                items: state.items.filter(item => item.id !== action.payload)
+            }
+
         default:
             return state;
     }
