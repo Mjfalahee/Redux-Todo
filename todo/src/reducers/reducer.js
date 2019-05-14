@@ -1,9 +1,9 @@
-// import action creators
+import { ADD_ITEM, TOGGLE_ITEM } from '../actions'
 
 const initialState = {
     items: [
-        {id: 0, todo: 'Clean the bathroom'},
-        {id: 1, todo: 'Wash the dishes'}
+        {value: 'Clean the bathroom', completed: true, id: 812038095},
+        {value: 'Wash the dishes', completed: false, id: 8123123}
         ]
 };
 
@@ -14,13 +14,23 @@ function reducer(state = initialState, action) {
                 ...state, 
                 items: [
                     ...state.items,
-                    {todo: action.payload}
+                    {value: action.payload.value, completed: false, id: action.payload.id}
                 ]
             };
         case TOGGLE_ITEM:
             return {
-
+                ...state,
+                items: state.items.map(item => {
+                    if (item.id === action.payload) {
+                        return {
+                            ...item,
+                            completed: !item.completed
+                        };
+                    }
+                    return item;
+                })
             };
+            
         default:
             return state;
     }
